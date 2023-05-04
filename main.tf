@@ -13,6 +13,15 @@ resource "aws_security_group_rule" "alb_ingress_rule_http_8080" {
     security_group_id = aws_security_group.alb_traffic.id
 }
 
+resource "aws_security_group_rule" "alb_ingress_rule_http_80" {
+    type      = "ingress"
+    from_port = var.web_app_redirect_port
+    to_port   = var.web_app_redirect_port
+    cidr_blocks = ["0.0.0.0/0"]
+    protocol  = "tcp"
+    security_group_id = aws_security_group.alb_traffic.id
+}
+
 resource "aws_security_group_rule" "alb_egress_rule" {
     type = "egress"
     from_port = 0
@@ -28,14 +37,14 @@ resource "aws_security_group" "allow_traffic" {
     vpc_id = var.vpc_id
 }
 
-resource "aws_security_group_rule" "ingress_rule_ssh" {
+/* resource "aws_security_group_rule" "ingress_rule_ssh" {
     type      = "ingress"
     from_port = 22
     to_port   = 22
     cidr_blocks = ["0.0.0.0/0"]
     protocol  = "tcp"
     security_group_id = aws_security_group.allow_traffic.id
-}
+} */
 
 resource "aws_security_group_rule" "ingress_rule_http_8080" {
     type      = "ingress"
@@ -135,6 +144,22 @@ resource "aws_lb_listener" "web_application_listener" {
     default_action {
         type = "forward"
         target_group_arn = aws_lb_target_group.web_application_target_group.arn
+    }
+}
+
+resource "aws_lb_listener" "web_application_redirect_listener" {
+    load_balancer_arn = aws_lb.ec2_alb.arn
+    port = var.web_app_redirect_port
+    protocol = "HTTP"
+
+    default_action {
+        type = "redirect"
+
+        redirect {
+            port = var.web_app_port
+            protocol = "HTTP"
+            status_code = "HTTP_301"
+        }
     }
 }
 

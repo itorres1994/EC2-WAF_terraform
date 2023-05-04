@@ -42,3 +42,8 @@ variable "web_app_port" {
     type = number
     default = 8080
 }
+
+variable "web_app_redirect_port" {
+    type = number
+    default = 80
+}
