@@ -41,7 +41,8 @@ resource "aws_security_group_rule" "ingress_rule_http_8080" {
     type      = "ingress"
     from_port = var.web_app_port
     to_port   = var.web_app_port
-    cidr_blocks = ["0.0.0.0/0"]
+    /* cidr_blocks = ["0.0.0.0/0"] */
+    source_security_group_id = aws_security_group.alb_traffic.id
     protocol  = "tcp"
     security_group_id = aws_security_group.allow_traffic.id
 }
@@ -140,7 +141,7 @@ resource "aws_lb_listener" "web_application_listener" {
 resource "aws_wafv2_web_acl" "web_app_acl" {
     name = "web-app-acl"
     scope = "REGIONAL"
-    description = "Do not allow traffic from outside the US"
+    description = "Web App ACL - Block common attacks, No traffic from outside US, Block excessive login requests"
     default_action {
         block {}
     }
