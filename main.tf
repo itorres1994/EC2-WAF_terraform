@@ -59,7 +59,7 @@ resource "aws_instance" "angi_interview_inst" {
     count                       = var.num_of_ec2
     ami                         = var.amz_linux_2_ec2_ami
     instance_type               = var.ec2_inst_type
-    associate_public_ip_address = false
+    associate_public_ip_address = true
     key_name                    = var.ec2_key_name
     vpc_security_group_ids      = [aws_security_group.allow_traffic.id]
     subnet_id                   = var.subnet_ids[count.index]
@@ -84,10 +84,10 @@ resource "aws_instance" "angi_interview_inst" {
         /bin/echo "def login():" >> /var/simple_flask_server/server/hello.py
         /bin/echo "    return 'Trying to login?'" >> /var/simple_flask_server/server/hello.py
         /bin/echo "if __name__ == '__main__':" >> /var/simple_flask_server/server/hello.py
-        /bin/echo "    app.run(host='0.0.0.0', port=${var.web_app_port}, debug=False)" >> /var/simple_flask_server/server/hello.py
+        /bin/echo "    app.run(host='0.0.0.0', port=8080, debug=False)" >> /var/simple_flask_server/server/hello.py
         cd /var/simple_flask_server/server
         /bin/python3 hello.py
-        /bin/echo "INFO: Simple Flask Server has been created on port ${var.web_app_port}" >> /var/simple_flask_server/simple-flask-server_init.log
+        /bin/echo "INFO: Simple Flask Server has been created on port 8080" >> /var/simple_flask_server/simple-flask-server_init.log
     EOF
 }
 
