@@ -27,3 +27,18 @@ variable "vpc_id" {
     type = string
     default = "vpc-0ffc96514ab36f8f0"
 }
+
+variable "subnet_id" {
+    type = string
+    default = "subnet-0a31cb25dda42dd61"
+}
+
+variable "subnet_ids" {
+    type = list
+    default = ["subnet-09e24a6bbbd88cbf5", "subnet-0a31cb25dda42dd61"]
+}
+
+variable "web_app_port" {
+    type = number
+    default = 8080
+}

@@ -400,3 +400,6 @@ FodyWeavers.xsd
 # Ignore Terraform state files
 **.tfstate
 **.tfstate.backup
+**.terraform
+**.terraform.lock.hcl
+**.terraform.tfstate.lock.info
