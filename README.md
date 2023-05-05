@@ -24,7 +24,7 @@ The following procedure was used to accomplish these requirements:
 1. Ensure your AWS CLI credentials are located in your `.aws` credentials file (i.e `/Users/itorres/.aws/credentials`)
 2. Ensure your AWS config has also been set to use the correct region specified in the requirements document (i.e. `/Users/itorres/.aws/config`)
 
-> Note: The terraform automation will not work correctly if the paths to the files noted in steps 1 and 2 of this section are not changed to reflect where your `credentials` and `config` file are located on your system.
+> Note: The terraform automation will not work correctly if the paths to the files noted in steps 1 and 2 of this section are not changed in the `providers.tf` file to reflect where your `credentials` and `config` file are located on your system.
 
 3. Confirm that terraform has been installed on your system
 
